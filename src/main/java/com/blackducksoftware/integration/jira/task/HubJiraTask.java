@@ -26,6 +26,7 @@ package com.blackducksoftware.integration.jira.task;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -145,9 +146,8 @@ public class HubJiraTask {
                     linksOfRulesToMonitor, ticketInfoFromSetup, fieldCopyConfig, hubSupportHelper);
 
             // Phone-Home
-            // TODO persist a date variable to see if we have phoned home yet today
-            final boolean shouldPhoneHome = true;
-            if (shouldPhoneHome) {
+            final LocalDate lastPhoneHome = jiraSettingsService.getLastPhoneHome();
+            if (LocalDate.now().isAfter(lastPhoneHome)) {
                 final HubVersionRequestService hubSupport = hubServicesFactory.createHubVersionRequestService();
                 final HubRegistrationRequestService regService = hubServicesFactory.createHubRegistrationRequestService();
                 try {
@@ -321,6 +321,7 @@ public class HubJiraTask {
             final PhoneHomeClient phClient = new PhoneHomeClient(logger, GoogleAnalyticsConstants.PRODUCTION_INTEGRATIONS_TRACKING_ID, timeout, proxyInfo, alwaysTrustServerCertificate);
             final PhoneHomeRequestBody body = builder.build();
             phClient.postPhoneHomeRequest(body, new CIEnvironmentVariables());
+            jiraSettingsService.setLastPhoneHome(LocalDate.now());
         } catch (final IllegalStateException e) {
             throw new IntegrationException(e);
         }
