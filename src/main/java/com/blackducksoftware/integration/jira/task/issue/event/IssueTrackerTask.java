@@ -152,6 +152,7 @@ public class IssueTrackerTask implements Callable<Boolean> {
     }
 
     public HubServicesFactory createHubServicesFactory(final HubServerConfig config) throws EncryptionException {
+        // TODO replace this conversion when hub-common is upgraded
         final HubProxyInfo hubProxyInfo = config.getProxyInfo();
         final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false), hubProxyInfo.getIgnoredProxyHosts());
         final RestConnection restConnection = new CredentialsRestConnection(logger, config.getHubUrl(), config.getGlobalCredentials().getUsername(), config.getGlobalCredentials().getDecryptedPassword(), config.getTimeout(),

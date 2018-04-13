@@ -1188,6 +1188,7 @@ public class HubJiraConfigController {
                 config.setErrorMessage(JiraConfigErrors.CHECK_HUB_SERVER_CONFIGURATION);
                 return null;
             }
+            // TODO replace this conversion when hub-common is upgraded
             final HubProxyInfo hubProxyInfo = serverConfig.getProxyInfo();
             final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false),
                     hubProxyInfo.getIgnoredProxyHosts());

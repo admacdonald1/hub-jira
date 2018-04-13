@@ -277,6 +277,7 @@ public class HubConfigController {
                     } else {
                         final HubServerConfig serverConfig = serverConfigBuilder.build();
                         try {
+                            // TODO replace this conversion when hub-common is upgraded
                             final HubProxyInfo hubProxyInfo = serverConfig.getProxyInfo();
                             final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false),
                                     hubProxyInfo.getIgnoredProxyHosts());

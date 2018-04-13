@@ -166,6 +166,7 @@ public class HubJiraTask {
                         hubHostName = PhoneHomeRequestBody.Builder.UNKNOWN_ID;
                         logger.debug("Could not get the Hub Host name.");
                     }
+                    // TODO replace this conversion when hub-common is upgraded
                     final HubProxyInfo hubProxyInfo = hubServerConfig.getProxyInfo();
                     final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false), hubProxyInfo.getIgnoredProxyHosts());
                     bdPhoneHome(hubVersion, regId, hubHostName, hubServerConfig.getTimeout(), proxyInfo, hubServerConfig.isAlwaysTrustServerCertificate());
@@ -222,6 +223,7 @@ public class HubJiraTask {
     }
 
     private HubServicesFactory createHubServicesFactory(final HubServerConfig hubServerConfig) throws EncryptionException {
+        // TODO replace this conversion when hub-common is upgraded
         final HubProxyInfo hubProxyInfo = hubServerConfig.getProxyInfo();
         final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false), hubProxyInfo.getIgnoredProxyHosts());
         final RestConnection restConnection = new CredentialsRestConnection(logger, hubServerConfig.getHubUrl(), hubServerConfig.getGlobalCredentials().getUsername(), hubServerConfig.getGlobalCredentials().getDecryptedPassword(),
