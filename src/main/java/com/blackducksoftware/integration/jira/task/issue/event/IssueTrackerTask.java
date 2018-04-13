@@ -37,11 +37,14 @@ import com.atlassian.jira.user.util.UserManager;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.blackducksoftware.integration.exception.EncryptionException;
 import com.blackducksoftware.integration.exception.IntegrationException;
+import com.blackducksoftware.integration.hub.Credentials;
 import com.blackducksoftware.integration.hub.HubSupportHelper;
 import com.blackducksoftware.integration.hub.api.nonpublic.HubVersionRequestService;
 import com.blackducksoftware.integration.hub.builder.HubServerConfigBuilder;
 import com.blackducksoftware.integration.hub.capability.HubCapabilitiesEnum;
+import com.blackducksoftware.integration.hub.global.HubProxyInfo;
 import com.blackducksoftware.integration.hub.global.HubServerConfig;
+import com.blackducksoftware.integration.hub.proxy.ProxyInfo;
 import com.blackducksoftware.integration.hub.rest.CredentialsRestConnection;
 import com.blackducksoftware.integration.hub.rest.RestConnection;
 import com.blackducksoftware.integration.hub.service.HubServicesFactory;
@@ -149,7 +152,10 @@ public class IssueTrackerTask implements Callable<Boolean> {
     }
 
     public HubServicesFactory createHubServicesFactory(final HubServerConfig config) throws EncryptionException {
-        final RestConnection restConnection = new CredentialsRestConnection(logger, config.getHubUrl(), config.getGlobalCredentials().getUsername(), config.getGlobalCredentials().getDecryptedPassword(), config.getTimeout());
+        final HubProxyInfo hubProxyInfo = config.getProxyInfo();
+        final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false), hubProxyInfo.getIgnoredProxyHosts());
+        final RestConnection restConnection = new CredentialsRestConnection(logger, config.getHubUrl(), config.getGlobalCredentials().getUsername(), config.getGlobalCredentials().getDecryptedPassword(), config.getTimeout(),
+                proxyInfo);
         return new HubServicesFactory(restConnection);
     }
 

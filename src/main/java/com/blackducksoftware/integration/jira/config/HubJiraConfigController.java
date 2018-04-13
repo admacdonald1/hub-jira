@@ -65,6 +65,7 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
 import com.atlassian.sal.api.transaction.TransactionTemplate;
 import com.atlassian.sal.api.user.UserManager;
 import com.blackducksoftware.integration.exception.IntegrationException;
+import com.blackducksoftware.integration.hub.Credentials;
 import com.blackducksoftware.integration.hub.HubSupportHelper;
 import com.blackducksoftware.integration.hub.api.item.HubViewFilter;
 import com.blackducksoftware.integration.hub.api.item.MetaService;
@@ -74,9 +75,11 @@ import com.blackducksoftware.integration.hub.api.project.ProjectRequestService;
 import com.blackducksoftware.integration.hub.builder.HubServerConfigBuilder;
 import com.blackducksoftware.integration.hub.capability.HubCapabilitiesEnum;
 import com.blackducksoftware.integration.hub.exception.HubIntegrationException;
+import com.blackducksoftware.integration.hub.global.HubProxyInfo;
 import com.blackducksoftware.integration.hub.global.HubServerConfig;
 import com.blackducksoftware.integration.hub.model.view.PolicyRuleView;
 import com.blackducksoftware.integration.hub.model.view.ProjectView;
+import com.blackducksoftware.integration.hub.proxy.ProxyInfo;
 import com.blackducksoftware.integration.hub.rest.CredentialsRestConnection;
 import com.blackducksoftware.integration.hub.rest.RestConnection;
 import com.blackducksoftware.integration.hub.rest.exception.IntegrationRestException;
@@ -1185,8 +1188,11 @@ public class HubJiraConfigController {
                 config.setErrorMessage(JiraConfigErrors.CHECK_HUB_SERVER_CONFIGURATION);
                 return null;
             }
-
-            restConnection = new CredentialsRestConnection(logger, serverConfig.getHubUrl(), serverConfig.getGlobalCredentials().getUsername(), serverConfig.getGlobalCredentials().getDecryptedPassword(), serverConfig.getTimeout());
+            final HubProxyInfo hubProxyInfo = serverConfig.getProxyInfo();
+            final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false),
+                    hubProxyInfo.getIgnoredProxyHosts());
+            restConnection = new CredentialsRestConnection(logger, serverConfig.getHubUrl(), serverConfig.getGlobalCredentials().getUsername(), serverConfig.getGlobalCredentials().getDecryptedPassword(), serverConfig.getTimeout(),
+                    proxyInfo);
             restConnection.connect();
 
         } catch (IllegalArgumentException | IntegrationException e) {

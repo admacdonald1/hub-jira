@@ -46,11 +46,14 @@ import com.atlassian.sal.api.user.UserManager;
 import com.blackducksoftware.integration.encryption.PasswordEncrypter;
 import com.blackducksoftware.integration.exception.EncryptionException;
 import com.blackducksoftware.integration.exception.IntegrationException;
+import com.blackducksoftware.integration.hub.Credentials;
 import com.blackducksoftware.integration.hub.builder.HubServerConfigBuilder;
 import com.blackducksoftware.integration.hub.global.HubCredentialsFieldEnum;
+import com.blackducksoftware.integration.hub.global.HubProxyInfo;
 import com.blackducksoftware.integration.hub.global.HubProxyInfoFieldEnum;
 import com.blackducksoftware.integration.hub.global.HubServerConfig;
 import com.blackducksoftware.integration.hub.global.HubServerConfigFieldEnum;
+import com.blackducksoftware.integration.hub.proxy.ProxyInfo;
 import com.blackducksoftware.integration.hub.rest.CredentialsRestConnection;
 import com.blackducksoftware.integration.jira.common.HubJiraLogger;
 import com.blackducksoftware.integration.validator.AbstractValidator;
@@ -274,10 +277,13 @@ public class HubConfigController {
                     } else {
                         final HubServerConfig serverConfig = serverConfigBuilder.build();
                         try {
+                            final HubProxyInfo hubProxyInfo = serverConfig.getProxyInfo();
+                            final ProxyInfo proxyInfo = new ProxyInfo(hubProxyInfo.getHost(), hubProxyInfo.getPort(), new Credentials(hubProxyInfo.getUsername(), hubProxyInfo.getDecryptedPassword(), false),
+                                    hubProxyInfo.getIgnoredProxyHosts());
                             final CredentialsRestConnection restConnection = new CredentialsRestConnection(logger, serverConfig.getHubUrl(),
                                     serverConfig.getGlobalCredentials().getUsername(),
                                     serverConfig.getGlobalCredentials().getDecryptedPassword(),
-                                    serverConfig.getTimeout());
+                                    serverConfig.getTimeout(), proxyInfo);
                             restConnection.connect();
 
                         } catch (final IntegrationException e) {

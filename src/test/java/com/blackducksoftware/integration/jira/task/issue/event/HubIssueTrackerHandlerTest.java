@@ -41,6 +41,7 @@ import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.status.Status;
 import com.atlassian.jira.user.ApplicationUser;
 import com.blackducksoftware.integration.hub.model.view.IssueView;
+import com.blackducksoftware.integration.hub.proxy.ProxyInfo;
 import com.blackducksoftware.integration.hub.rest.CredentialsRestConnection;
 import com.blackducksoftware.integration.hub.rest.RestConnection;
 import com.blackducksoftware.integration.jira.common.HubJiraConstants;
@@ -83,7 +84,7 @@ public class HubIssueTrackerHandlerTest {
     public void initTest() throws Exception {
         settings = new PluginSettingsMock();
         final URL url = new URL("http://www.google.com");
-        final RestConnection restConnection = new CredentialsRestConnection(Mockito.mock(HubJiraLogger.class), url, "", "", 120);
+        final RestConnection restConnection = new CredentialsRestConnection(Mockito.mock(HubJiraLogger.class), url, "", "", 120, ProxyInfo.NO_PROXY_INFO);
         issueServiceMock = new BomComponentIssueServiceMock(restConnection);
 
         issueHandler = new HubIssueTrackerHandler(new JiraServicesMock(), new JiraSettingsService(settings), issueServiceMock);
