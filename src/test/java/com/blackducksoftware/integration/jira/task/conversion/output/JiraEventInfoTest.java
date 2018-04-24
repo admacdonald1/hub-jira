@@ -38,17 +38,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.blackducksoftware.integration.hub.api.generated.view.ComponentVersionView;
-import com.blackducksoftware.integration.hub.notification.ProjectVersionModel;
-import com.blackducksoftware.integration.hub.notification.VulnerabilityContentItem;
 import com.blackducksoftware.integration.hub.notification.content.VulnerabilitySourceQualifiedId;
 import com.blackducksoftware.integration.jira.common.exception.EventDataBuilderException;
 import com.blackducksoftware.integration.jira.config.ProjectFieldCopyMapping;
+import com.blackducksoftware.integration.jira.notification.ProjectVersionModel;
+import com.blackducksoftware.integration.jira.notification.VulnerabilityContentItem;
 import com.blackducksoftware.integration.jira.task.conversion.output.eventdata.EventCategory;
 import com.blackducksoftware.integration.jira.task.conversion.output.eventdata.EventData;
 import com.blackducksoftware.integration.jira.task.conversion.output.eventdata.EventDataBuilder;
 
 public class JiraEventInfoTest {
-
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
     }

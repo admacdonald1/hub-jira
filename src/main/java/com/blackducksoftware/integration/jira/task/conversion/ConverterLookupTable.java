@@ -29,13 +29,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.blackducksoftware.integration.hub.exception.HubIntegrationException;
-import com.blackducksoftware.integration.hub.notification.NotificationContentItem;
 import com.blackducksoftware.integration.hub.service.HubServicesFactory;
 import com.blackducksoftware.integration.jira.common.HubJiraLogger;
 import com.blackducksoftware.integration.jira.common.HubProjectMappings;
 import com.blackducksoftware.integration.jira.common.JiraContext;
 import com.blackducksoftware.integration.jira.common.exception.ConfigurationException;
 import com.blackducksoftware.integration.jira.config.HubJiraFieldCopyConfigSerializable;
+import com.blackducksoftware.integration.jira.notification.NotificationContentItem;
 import com.blackducksoftware.integration.jira.task.JiraSettingsService;
 import com.blackducksoftware.integration.jira.task.issue.JiraServices;
 

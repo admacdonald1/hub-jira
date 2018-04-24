@@ -31,19 +31,19 @@ import org.apache.log4j.Logger;
 
 import com.blackducksoftware.integration.hub.api.view.MetaHandler;
 import com.blackducksoftware.integration.hub.exception.HubIntegrationException;
-import com.blackducksoftware.integration.hub.notification.ListProcessorCache;
-import com.blackducksoftware.integration.hub.notification.NotificationEvent;
-import com.blackducksoftware.integration.hub.notification.NotificationProcessor;
-import com.blackducksoftware.integration.hub.notification.PolicyOverrideContentItem;
-import com.blackducksoftware.integration.hub.notification.PolicyViolationClearedContentItem;
-import com.blackducksoftware.integration.hub.notification.PolicyViolationContentItem;
-import com.blackducksoftware.integration.hub.notification.VulnerabilityContentItem;
 import com.blackducksoftware.integration.hub.service.HubServicesFactory;
 import com.blackducksoftware.integration.jira.common.HubJiraLogger;
 import com.blackducksoftware.integration.jira.common.HubProjectMappings;
 import com.blackducksoftware.integration.jira.common.JiraContext;
 import com.blackducksoftware.integration.jira.common.exception.ConfigurationException;
 import com.blackducksoftware.integration.jira.config.HubJiraFieldCopyConfigSerializable;
+import com.blackducksoftware.integration.jira.notification.ListProcessorCache;
+import com.blackducksoftware.integration.jira.notification.NotificationEvent;
+import com.blackducksoftware.integration.jira.notification.NotificationProcessor;
+import com.blackducksoftware.integration.jira.notification.PolicyOverrideContentItem;
+import com.blackducksoftware.integration.jira.notification.PolicyViolationClearedContentItem;
+import com.blackducksoftware.integration.jira.notification.PolicyViolationContentItem;
+import com.blackducksoftware.integration.jira.notification.VulnerabilityContentItem;
 import com.blackducksoftware.integration.jira.task.JiraSettingsService;
 import com.blackducksoftware.integration.jira.task.issue.JiraServices;
 
